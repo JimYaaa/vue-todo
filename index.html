@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-hant">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv ="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=1" />
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="shortcut icon" href="">
+<title></title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="" />
+<meta itemprop="name" content="">
+<meta name="description" content="">
+<meta property="og:description" content="" />
+<meta itemprop="description" content="">
+
+<meta property="og:image" content="" />
+<meta itemprop="image" content="" />
+<meta property="og:url" content="" />
+<meta itemprop="url" content="">
+<script src="https://use.fontawesome.com/549a09b1e8.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery-1.8.3.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+  <div id="app" class="container">
+    <div class="todo-wrapper">
+      <todo-header></todo-header>
+      <div class="todo-content">
+        <todo-report></todo-report>
+        <todo-list v-bind:collection="listState.items"></todo-list>
+      </div>
+    </div>
+  </div>
+
+<!-- template -->
+
+  <template id="todo-header">
+    <div class="todo-header">
+      <time>
+        <span class="day">{{date}}</span>
+        <span class="dayofweek">{{weekDay}}</span>
+        <span class="month">{{month}}, {{year}}</span>
+      </time>
+      <div class="add-btn" @click="add">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </div>
+    </div>
+  </template>
+
+  <template id="todo-report">
+    <div class="todo-report">
+      <h2>Your tasks</h2>
+      <p>{{taskDone}} done / {{taskTotal}} tasks</p>
+    </div>
+  </template>
+
+  <template id="todo-list">
+    <ul class="todo-list">
+      <todo-items v-for="item in collection" v-bind:model="item"></todo-items>
+    </ul>
+  </template>
+
+  <template id="todo-items">
+    <li class="todo-item" :class="{'taskDone': isDone}">
+      <span class="label {{model.label}}" @click="showLabel">
+        <ul class="label-popup">
+          <li class="important" @click="changLabel('important')">Important</li>
+          <li class="normal" @click="changLabel('normal')">Normal</li>
+          <li class="other" @click="changLabel('other')">Whatever</li>
+        </ul>
+      </span>
+
+      <p v-if="!model.isEditing">{{model.text}}</p>
+
+      <p v-if="model.isEditing">
+        <input type="text" v-model="tempText" @keyup.enter="save" placeholder="Please Type a new task and hit enter">
+      </p>
+
+      <div class="todo-action" @click="showAction">
+        <span class="more">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <ul class="action-list">
+          <li v-if="!isDone" @click="taskDone">Mark done</li>
+          <li v-if="!isDone" @click="editing">Edit</li>
+          <li @click="delete">Delete</li>
+        </ul>
+      </div>
+    </li>
+  </template>
+
+
+
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+  <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
