@@ -36,7 +36,10 @@ $(document).ready(function() {
     },
     methods: {
       add: function() {
-        ListStore.newItem('', 'undone', 'normal')
+        ListStore.newItem('', 'undone', 'normal');
+        this.$nextTick(function() {
+          $('.todo-item').find('input').focus();
+        }) 
       }
     },
   });
